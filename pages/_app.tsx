@@ -17,4 +17,4 @@ function MyApp({ Component, pageProps }: AppProps) {
     </Language.Provider>)
 
 
-export default MyApp
+export default MyAp
