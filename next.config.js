@@ -4,6 +4,9 @@ const nextConfig = {
   i18n: {
     locales: ['es', 'br'],
     defaultLocale: 'es',
+  },
+  images: {
+    domains: ["cloudflare-ipfs.com"]
   }
 
 }

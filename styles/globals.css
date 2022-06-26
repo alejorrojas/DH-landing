@@ -55,11 +55,27 @@ button:active {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  flex-direction: column;
 }
 .landing > img{
   width: 50%;
 }
 
+section{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+
+}
+
+section > div{
+  margin: 20px;
+}
+
+.avatar {
+  border-radius: 999px;
+}
 
 
 @media screen and (max-width: 700px){

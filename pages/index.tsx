@@ -6,8 +6,28 @@ import contentAR from "../locales/ar"
 import contentBR from "../locales/br"
 import { useContext } from 'react'
 import { Language } from './_app'
+import { InferGetServerSidePropsType } from 'next'
 
-const Landing: NextPage = () => {
+
+export type Data = {
+    name: string,
+    avatar: string,
+    id: string
+}
+
+
+type Props = InferGetServerSidePropsType<typeof getServerSideProps>
+
+export const getServerSideProps = async () => {
+    const res = await fetch("https://62b3a9264f851f87f45dfb80.mockapi.io/api/example/data")
+    const data: Data[]= await res.json()
+
+    return { 
+        props: { data }
+    }
+  }
+
+const Landing = ({data}: Props) => {
   const locale = useContext(Language)
   const content = locale === "es" ? contentAR : contentBR
 
@@ -19,14 +39,29 @@ const Landing: NextPage = () => {
         <meta name="description" content={content.description} />
         <link rel="shortcut icon" href="/logo.png" />
       </Head>
-      <div>
-       <h1>{content.title}</h1>
-       <h2>{content.subtitle}</h2>
-       <button>{content.buttonText}</button>
-      </div>
-     <Image src={people} alt="people" width={700} height={700} />
+      <main>
+        <div>
+        <h1 >{content.title}</h1>
+        <h2>{content.subtitle}</h2>
+        <button>{content.buttonText}</button>
+        </div>
+        <Image src={people} alt="people" width={700} height={700} />
+      </main>
+      <section>
+        {data?.map(d => {
+           
+            return <div key={d.id} >
+                <h2>{d.name}</h2>
+                <Image className='avatar' src={d.avatar} alt="avatar" width={200} height={200} />
+            </div>
+        })}
+      </section>
     </div>
   )
 }
 
 export default Landing
+
+
+
+
