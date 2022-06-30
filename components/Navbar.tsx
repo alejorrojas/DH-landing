@@ -24,7 +24,7 @@ const Navbar = () => {
         <div className={open ? styles.activeLinks : styles.links}>
             <Link href="/">{content.home}</Link>        
             <Link href="/about">{content.about}</Link>        
-            <Link href="/contact">{content.contact}</Link>        
+            <Link href="/people">{content.people}</Link>        
         </div>
     </nav>
   )

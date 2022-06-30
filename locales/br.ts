@@ -5,7 +5,7 @@ const content =  {
     buttonText: "Inscreva-se",
     home: "Início",
     about: "Sobre nós",
-    contact: "Contato"
+    people: "People"
 }
 
 export default content
