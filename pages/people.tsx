@@ -29,7 +29,7 @@ const People = ({data}: Props) => {
     fetch("https://dh-landing-r13e879lc-alejorrojas.vercel.app/api/people", {
       method: "POST",
       body: JSON.stringify(data),
-      headers: {"Access-Control-Allow-Origin": "*"}
+      mode: "no-cors",
     })
     console.log(data);
     reset()
