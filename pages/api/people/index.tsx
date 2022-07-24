@@ -23,9 +23,12 @@ export type People = {
     quote: string
 }
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<People[]>) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse<People[]|any>) {
     // const resolve = await fetch("https://62b3a9264f851f87f45dfb80.mockapi.io/api/example/data")
     // const data: Data[]= await resolve.json()
-    console.log("aqui 2");
-    res.status(200).json(people)
+    if(req.method === "POST"){
+      people.push(JSON.parse(req.body))
+      res.status(200).send({message: "good"})
+    }
+    else res.status(200).json(people)
 }

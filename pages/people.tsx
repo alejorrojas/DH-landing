@@ -14,7 +14,7 @@ export type Data = {
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>
 
 export const getServerSideProps = async () => {
-    const res = await fetch("hhttps://dh-landing-mpr8v0b89-alejorrojas.vercel.app/api/people")
+    const res = await fetch("https://dh-landing-r13e879lc-alejorrojas.vercel.app/api/people")
     const data: Data[]= await res.json()
 
     return { 
@@ -23,10 +23,15 @@ export const getServerSideProps = async () => {
   }
 
 const People = ({data}: Props) => {
-  const {register, handleSubmit} = useForm<People>()
+  const {register, handleSubmit, reset} = useForm<People>()
 
   const submit: SubmitHandler<People> = (data)=>{
-    people.push(data)
+    fetch("https://dh-landing-r13e879lc-alejorrojas.vercel.app/api/people", {
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+    console.log(data);
+    reset()
   }
 
   return (<>
@@ -35,13 +40,14 @@ const People = ({data}: Props) => {
       <input placeholder='id' {...register("id")} />
       <input placeholder='Avatar' {...register("avatar")} />
       <input placeholder='quote' {...register("quote")} />
+      <button type='submit'>Submit</button>
     </form>
     <section>
         {data?.map(d => {
-           
+          console.log(d);
           return <div key={d.id} >
                 <h2>{d.name}</h2>
-                <Image className='avatar' src={d.avatar} alt="avatar" width={200} height={200} />
+                <Image className='avatar' src={d.avatar || "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/861.jpg"} alt="avatar" width={200} height={200} />
             </div>
         })}
     </section>
