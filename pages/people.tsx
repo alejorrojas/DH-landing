@@ -28,7 +28,8 @@ const People = ({data}: Props) => {
   const submit: SubmitHandler<People> = (data)=>{
     fetch("https://dh-landing-r13e879lc-alejorrojas.vercel.app/api/people", {
       method: "POST",
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
+      headers: {"Access-Control-Allow-Origin": "*"}
     })
     console.log(data);
     reset()
