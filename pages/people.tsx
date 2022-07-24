@@ -14,7 +14,7 @@ export type Data = {
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>
 
 export const getServerSideProps = async () => {
-    const res = await fetch("http://localhost:3000/api/people")
+    const res = await fetch("hhttps://dh-landing-mpr8v0b89-alejorrojas.vercel.app/api/people")
     const data: Data[]= await res.json()
 
     return { 
