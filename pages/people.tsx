@@ -1,7 +1,8 @@
 import React from 'react'
 import { InferGetServerSidePropsType } from 'next'
 import Image from 'next/image'
-
+import { People, people } from './api/people';
+import { useForm, SubmitHandler } from 'react-hook-form'
 
 export type Data = {
     name: string,
@@ -22,16 +23,29 @@ export const getServerSideProps = async () => {
   }
 
 const People = ({data}: Props) => {
-  return (
+  const {register, handleSubmit} = useForm<People>()
+
+  const submit: SubmitHandler<People> = (data)=>{
+    people.push(data)
+  }
+
+  return (<>
+    <form onSubmit={handleSubmit(submit)} >
+      <input placeholder='Name' {...register("name")} />
+      <input placeholder='id' {...register("id")} />
+      <input placeholder='Avatar' {...register("avatar")} />
+      <input placeholder='quote' {...register("quote")} />
+    </form>
     <section>
         {data?.map(d => {
            
-            return <div key={d.id} >
+          return <div key={d.id} >
                 <h2>{d.name}</h2>
                 <Image className='avatar' src={d.avatar} alt="avatar" width={200} height={200} />
             </div>
         })}
     </section>
+  </>
   )
 }
 
