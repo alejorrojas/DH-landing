@@ -28,6 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     // const data: Data[]= await resolve.json()
     if(req.method === "POST"){
       res.setHeader("Allow", "POST");
+      res.setHeader("Access-Control-Allow-Origin", "*");
       res.status(200).send(req.body)
     }
     else res.status(200).json(people)
