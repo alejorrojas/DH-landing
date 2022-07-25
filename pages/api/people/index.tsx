@@ -27,8 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     // const resolve = await fetch("https://62b3a9264f851f87f45dfb80.mockapi.io/api/example/data")
     // const data: Data[]= await resolve.json()
     if(req.method === "POST"){
-      people.push(JSON.parse(req.body))
-      res.status(200).send({message: "good"})
+      res.status(200).send(req.body)
     }
     else res.status(200).json(people)
 }

@@ -25,14 +25,16 @@ export const getServerSideProps = async () => {
 const People = ({data}: Props) => {
   const {register, handleSubmit, reset} = useForm<People>()
 
-  const submit: SubmitHandler<People> = (data)=>{
-    fetch("https://dh-landing-r13e879lc-alejorrojas.vercel.app/api/people", {
+  const submit: SubmitHandler<People> = async(data)=>{
+    const res = await fetch("http://localhost:3000/api/people", {
       method: "POST",
       body: JSON.stringify(data),
-      mode: "no-cors",
     })
-    console.log(data);
     reset()
+    if(res.status === 200){
+      const data = await res.json()
+      console.log(data);
+    }
   }
 
   return (<>
@@ -45,7 +47,6 @@ const People = ({data}: Props) => {
     </form>
     <section>
         {data?.map(d => {
-          console.log(d);
           return <div key={d.id} >
                 <h2>{d.name}</h2>
                 <Image className='avatar' src={d.avatar || "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/861.jpg"} alt="avatar" width={200} height={200} />
