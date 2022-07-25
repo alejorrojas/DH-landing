@@ -29,6 +29,7 @@ const People = ({data}: Props) => {
     const res = await fetch("https://dh-landing-hmnl3auf4-alejorrojas.vercel.app/api/people", {
       method: "POST",
       body: JSON.stringify(data),
+      headers: {"Access-Control-Allow-Origin": "*"}
     })
     reset()
     if(res.status === 200){
