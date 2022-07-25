@@ -26,7 +26,7 @@ const People = ({data}: Props) => {
   const {register, handleSubmit, reset} = useForm<People>()
 
   const submit: SubmitHandler<People> = async(data)=>{
-    const res = await fetch("http://localhost:3000/api/people", {
+    const res = await fetch("https://dh-landing-hmnl3auf4-alejorrojas.vercel.app/api/people", {
       method: "POST",
       body: JSON.stringify(data),
     })
