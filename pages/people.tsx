@@ -14,7 +14,7 @@ export type Data = {
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>
 
 export const getServerSideProps = async () => {
-    const res = await fetch("https://dh-landing-r13e879lc-alejorrojas.vercel.app/api/people")
+    const res = await fetch("https://dh-landing.vercel.app/api/people")
     const data: Data[]= await res.json()
 
     return { 
@@ -29,7 +29,6 @@ const People = ({data}: Props) => {
     const res = await fetch("https://dh-landing.vercel.app/api/people", {
       method: "POST",
       body: JSON.stringify(data),
-      headers: {"Access-Control-Allow-Origin": "*"}
     })
     reset()
     if(res.status === 200){
