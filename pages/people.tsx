@@ -1,7 +1,8 @@
 import React from 'react'
 import { InferGetServerSidePropsType } from 'next'
 import Image from 'next/image'
-
+import { People } from './api/people';
+import { useForm, SubmitHandler } from 'react-hook-form'
 
 export type Data = {
     name: string,
@@ -13,7 +14,7 @@ export type Data = {
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>
 
 export const getServerSideProps = async () => {
-    const res = await fetch("http://localhost:3000/api/people")
+    const res = await fetch("https://dh-landing-r13e879lc-alejorrojas.vercel.app/api/people")
     const data: Data[]= await res.json()
 
     return { 
@@ -22,16 +23,37 @@ export const getServerSideProps = async () => {
   }
 
 const People = ({data}: Props) => {
-  return (
+  const {register, handleSubmit, reset} = useForm<People>()
+
+  const submit: SubmitHandler<People> = async(data)=>{
+    const res = await fetch("https://dh-landing.vercel.app/api/people", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {"Access-Control-Allow-Origin": "*"}
+    })
+    reset()
+    if(res.status === 200){
+      const data = await res.json()
+      console.log(data);
+    }
+  }
+
+  return (<>
+    <form onSubmit={handleSubmit(submit)} >
+      <input placeholder='Name' {...register("name")} />
+      <input placeholder='id' {...register("id")} />
+      <input placeholder='Avatar' {...register("avatar")} />
+      <button type='submit'>Submit</button>
+    </form>
     <section>
         {data?.map(d => {
-           
-            return <div key={d.id} >
+          return <div key={d.id} >
                 <h2>{d.name}</h2>
-                <Image className='avatar' src={d.avatar} alt="avatar" width={200} height={200} />
+                <Image className='avatar' src={d.avatar || "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/861.jpg"} alt="avatar" width={200} height={200} />
             </div>
         })}
     </section>
+  </>
   )
 }
 
